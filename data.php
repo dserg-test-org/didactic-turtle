@@ -9,6 +9,8 @@
 	function getData($db) {
 		try {
 			$page = $_GET['page'];
+			$order_by = $_GET['sidx'] == 'name' ? 'name' : '';
+			$order = $_GET['sord'] == 'asc' ? 'asc' : 'desc';
 
 			$stmt = $db->query('SELECT COUNT(*) c FROM employees');
 			$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -20,12 +22,13 @@
 			$page_limit = ($page - 1) * 100;
 
 			$query = "
-			SELECT e1.id e_id, e1.name e_name, e2.id b_id, e2.name b_name
+			SELECT e1.id e_id, e1.name 'Employee Name', e2.name 'Employee Boss'
 			FROM employees e1
 			INNER JOIN employees e2 ON e2.id = e1.bossId
-			LIMIT ?,100
+			" . ($order_by != '' ? "ORDER BY `e1`.`{$order_by}` {$order}" : "") . 
+			" LIMIT ?,100
 			";
-
+			
 			$stmt = $db->prepare($query);
 			$stmt->execute(array($page_limit));
 
@@ -110,7 +113,7 @@
 
 	$data = getData($db);
 	foreach($data['rows'] as $k => $v) {
-		$data['rows'][$k]['depth'] = getDistance($db, $v["e_id"]);
+		$data['rows'][$k]['Distance from CEO'] = getDistance($db, $v["e_id"]);
 	}
 	echo printDataJSON($data);
 

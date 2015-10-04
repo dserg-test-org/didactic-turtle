@@ -12,27 +12,21 @@
 	<link rel = "stylesheet" type = "text/css" href = "css/main.css">
 	<script type = "text/javascript">
 		$(document).ready(function() {
-			
 			$("#grid").jqGrid({
 				url: "data.php",
 				datatype: 'json',
 				width: 700,
 				height: 500,
-				colNames:['e_id','e_name', 'b_id', 'b_name', 'depth'],
+				colNames:['Employee Name','Employee Boss', 'Distance from CEO'],
 				colModel:[
-					{name:'e_id', index:'e_id', key: true, width:50},
-					{name:'e_name', index:'e_name', width:100},
-					{name:'b_id', index:'b_id', width:100},
-					{name:'b_name', index:'b_name', width:100},
-					{name:'depth', index:'depth', width:100}
+					{name:'Employee Name', index: 'name', key: true},
+					{name:'Employee Boss', sortable: false},
+					{name:'Distance from CEO', sortable: false}
 				],
 				pager: '#pager',
-				sortname: 'e_id',
 				viewrecords: true,
-				sortorder: "asc",
 				caption:"Org Chart Viewer"
 			});
-
 		});
 	</script>
 </head>
