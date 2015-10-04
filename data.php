@@ -1,6 +1,11 @@
 <?php
+	// Initialize the database connection
 	require "config.php";
 
+	/*
+	Returns an associative array of employee/boss ID/name for a given page.
+	A page is defined as 100 rows
+	*/
 	function getData($db) {
 		try {
 			$page = $_GET['page'];
@@ -31,9 +36,17 @@
 			die("MySQL Error: " . $e->getMessage());
 		}
 	}
-	function getDistance($db, $i) {
-		return getParent($db, $i, 0);
+
+	/*
+	Returns the distance from a given employee ID to CEO
+	*/
+	function getDistance($db, $employee_id) {
+		return getParent($db, $employee_id, 0);
 	}
+
+	/*
+	Returns the distance from a given employee ID to CEO
+	*/
 	function getParent($db, $id, $depth) {
 		try {
 			$query = "SELECT bossId FROM employees WHERE id = '$id' AND bossId != id LIMIT 1";			
@@ -50,6 +63,17 @@
 			die("MySQL Error: " . $e->getMessage());
 		}
 	}
+
+	/*
+	Returns the number of subordinants of a given employee
+	*/
+	function getSubordinants($db, $employee_id) {
+		// TBD
+	}
+
+	/*
+	Prints data in a simple HTML table
+	*/
 	function printData($data) {
 		try {
 			echo "<table>";
@@ -71,6 +95,10 @@
 		} catch (Exception $e) {
 		}
 	}
+
+	/*
+	Prints data in JSON format
+	*/
 	function printDataJSON($data) {
 		try {
 			return json_encode($data);
