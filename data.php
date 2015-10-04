@@ -41,13 +41,14 @@
 	Returns the distance from a given employee ID to CEO
 	*/
 	function getDistance($db, $employee_id) {
-		return getParent($db, $employee_id, 0);
+		return _getDistance($db, $employee_id, 0);
 	}
 
 	/*
 	Returns the distance from a given employee ID to CEO
+	Helper function
 	*/
-	function getParent($db, $id, $depth) {
+	function _getDistance($db, $id, $depth) {
 		try {
 			$query = "SELECT bossId FROM employees WHERE id = '$id' AND bossId != id LIMIT 1";			
 			$stmt = $db->query($query);
@@ -55,7 +56,7 @@
 			$count = $stmt->rowCount();
 			if ($count > 0) {
 				$depth = $depth + 1;
-				return getParent($db, $val[0]['bossId'], $depth);
+				return _getDistance($db, $val[0]['bossId'], $depth);
 			} else {
 				return $depth;
 			}
