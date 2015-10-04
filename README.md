@@ -2,8 +2,8 @@
 
 
 
-Use the following format for the "dbconfig" file
-user=[user]
-host=[host]
-password=[password]
-dbname=[database containing employees table]
+Use the following format for the "dbconfig" file<br/>
+user=[user]<br/>
+host=[host]<br/>
+password=[password]<br/>
+dbname=[database containing employees table]<br/>
