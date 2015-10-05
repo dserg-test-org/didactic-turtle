@@ -8,7 +8,7 @@
 	*/
 	function getData($db) {
 		try {
-			$page = $_GET['page'];
+			$page = preg_replace('/[^0-9]+/', "", $_GET['page']);
 			$order_by = $_GET['sidx'] == 'name' ? 'name' : '';
 			$order = $_GET['sord'] == 'asc' ? 'asc' : 'desc';
 
